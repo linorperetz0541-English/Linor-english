@@ -36,14 +36,12 @@
 
         <a href="index.html" class="nav-btn">← Back to All Grades</a>
 
-        <!-- Filter Tabs -->
         <div class="filter-tabs">
             <button class="filter-tab active" onclick="setFilter('all', this)">All Units</button>
             <button class="filter-tab" onclick="setFilter('available', this)">✅ Available</button>
             <button class="filter-tab" onclick="setFilter('coming', this)">🔜 Coming Soon</button>
         </div>
 
-        <!-- Search -->
         <div class="search-wrapper">
             <input type="text" id="searchInput" onkeyup="filterUnits()" placeholder="🔍 Search units...">
         </div>
@@ -52,22 +50,7 @@
             🔍 No units found.
         </p>
 
-        <!-- 
-            ============================================
-            UNITS GRID — AUTO-DETECTED!
-            
-            You do NOT need to edit this file.
-            Just add files to the units/ folder like:
-              units/9th-unit1.html
-              units/9th-unit2.html
-              etc.
-            
-            The JavaScript will automatically detect
-            which files exist and unlock those cards!
-            ============================================
-        -->
         <div class="units-grid" id="unitsGrid">
-            <!-- Cards are generated automatically by JavaScript -->
             <div class="loading-message" id="loadingMessage">
                 ⏳ Checking available units...
             </div>
@@ -79,25 +62,12 @@
         <p>Made with 💕 for 9th grade students · Linor Peretz</p>
     </footer>
 
-    <!-- 
-        UNIT CONFIGURATION
-        This is the ONLY thing you might want to edit:
-        the unit names/titles. Everything else is automatic.
-    -->
+    <!-- THIS SCRIPT BLOCK WAS MISSING! -->
     <script>
-        // ============================================
-        // CONFIGURE YOUR UNITS HERE
-        // 
-        // grade: the prefix for file names (e.g., "9th")
-        // units: list of unit names
-        //
-        // Files should be named: units/9th-unit1.html, units/9th-unit2.html, etc.
-        // ============================================
-        
-        const gradeConfig = {
+        var gradeConfig = {
             grade: "9th",
             units: [
-                { number: 1,  title: "Growing Up" },
+                { number: 1,  title: "Getting to Know You" },
                 { number: 2,  title: "Technology and Society" },
                 { number: 3,  title: "The World of Work" },
                 { number: 4,  title: "Diversity and Tolerance" },
@@ -110,7 +80,6 @@
             ]
         };
 
-        // Auto-detect and build the grid
         autoDetectUnits(gradeConfig);
     </script>
 
