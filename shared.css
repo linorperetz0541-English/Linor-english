@@ -3,9 +3,6 @@
    
    This file is loaded by ALL pages.
    Change something here = changes everywhere.
-   
-   HOW TO CHANGE COLORS:
-   Edit the :root variables below
    ========================================== */
 
 /* ===== THEME COLORS ===== */
@@ -24,9 +21,6 @@
     --radius-full: 50px;
     --transition: all 0.3s ease;
 }
-
-/* Grade Color Themes — set by each page */
-/* Each page sets: --grade-1 and --grade-2 */
 
 /* ===== RESET ===== */
 * {
@@ -84,6 +78,11 @@ body {
 @keyframes pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .animate-in {
@@ -190,6 +189,12 @@ body {
     padding: 30px 20px;
 }
 
+/* ===== SECTION HEADER ===== */
+.section-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 /* ===== NAVIGATION ===== */
 .nav-btn {
     display: inline-flex;
@@ -280,6 +285,15 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
+}
+
+/* ===== LOADING MESSAGE ===== */
+.loading-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-light);
+    font-size: 1.1em;
 }
 
 /* ===== UNIT CARD ===== */
@@ -646,6 +660,47 @@ body {
 
 .grade-card:hover .arrow {
     transform: translateX(8px);
+}
+
+/* ===== COPY BUTTON ===== */
+.copy-btn {
+    padding: 6px 16px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+/* Copy Toast */
+.copy-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #155724;
+    color: white;
+    padding: 12px 30px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.95em;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.copy-toast.show {
+    transform: translateX(-50%) translateY(0);
 }
 
 /* ===== FOOTER ===== */

@@ -1,12 +1,128 @@
 /* ==========================================
    LINOR'S ENGLISH HUB — SHARED JAVASCRIPT
    
-   This file is loaded by ALL pages.
-   It handles: Search, Filters, Exercises,
-   Progress tracking, Animations.
+   ✅ AUTO-DETECTS unit files in /units/ folder!
    
-   Linor doesn't need to touch this file!
+   How it works:
+   1. Each grade page defines a gradeConfig object
+   2. The autoDetectUnits() function checks which files exist
+   3. Cards are built automatically — available or locked
+   
+   Linor just needs to:
+   - Add a file to /units/ (e.g., units/9th-unit4.html)
+   - Refresh the page
+   - Done! The card unlocks automatically.
    ========================================== */
+
+/* ===== AUTO-DETECT UNITS SYSTEM ===== */
+
+/**
+ * Main function: checks which unit files exist and builds the grid.
+ * Called from each grade page with a config object.
+ * 
+ * @param {Object} config - { grade: "9th", units: [{number, title}, ...] }
+ */
+async function autoDetectUnits(config) {
+    const grid = document.getElementById('unitsGrid');
+    const loadingMsg = document.getElementById('loadingMessage');
+    
+    if (!grid || !config) return;
+
+    // Check all unit files in parallel
+    const results = await Promise.all(
+        config.units.map(unit => checkUnitFile(config.grade, unit))
+    );
+
+    // Remove loading message
+    if (loadingMsg) loadingMsg.remove();
+
+    // Count available
+    let availableCount = 0;
+
+    // Build cards
+    results.forEach((result, index) => {
+        const unit = config.units[index];
+        const isAvailable = result;
+        
+        if (isAvailable) availableCount++;
+
+        const card = createUnitCard(config.grade, unit, isAvailable, index);
+        grid.appendChild(card);
+    });
+
+    // Update stats in header
+    updateStats(config.units.length, availableCount);
+
+    // Re-init scroll animations
+    animateOnScroll();
+}
+
+/**
+ * Checks if a unit file exists by trying to fetch it.
+ * Returns true if the file exists (HTTP 200), false otherwise.
+ */
+async function checkUnitFile(grade, unit) {
+    const filePath = `units/${grade}-unit${unit.number}.html`;
+    
+    try {
+        const response = await fetch(filePath, { method: 'HEAD' });
+        return response.ok; // true if status 200
+    } catch (error) {
+        return false; // Network error = file doesn't exist
+    }
+}
+
+/**
+ * Creates a unit card element (either as a link or locked div).
+ */
+function createUnitCard(grade, unit, isAvailable, index) {
+    const filePath = `units/${grade}-unit${unit.number}.html`;
+    
+    // Create the right element type
+    const card = document.createElement(isAvailable ? 'a' : 'div');
+    
+    if (isAvailable) {
+        card.href = filePath;
+        card.className = 'unit-card animate-in';
+    } else {
+        card.className = 'unit-card locked animate-in';
+    }
+    
+    card.setAttribute('data-status', isAvailable ? 'available' : 'coming');
+    card.setAttribute('data-title', unit.title.toLowerCase());
+    card.style.animationDelay = (index * 0.05) + 's';
+
+    // Card inner HTML
+    card.innerHTML = `
+        <div class="unit-card-inner">
+            <span class="unit-number">Unit ${unit.number}</span>
+            <h3>${isAvailable ? '📖' : '🔒'} ${unit.title}</h3>
+            <p class="unit-desc">${isAvailable 
+                ? 'Vocabulary, reading & exercises' 
+                : 'Coming Soon'
+            }</p>
+            <span class="unit-btn-label ${isAvailable ? 'available' : 'coming'}">
+                ${isAvailable ? '✅ Start Learning →' : '🔜 Coming Soon'}
+            </span>
+        </div>
+    `;
+
+    return card;
+}
+
+/**
+ * Updates the stats in the header (total, available, coming soon).
+ */
+function updateStats(total, available) {
+    const totalEl = document.getElementById('totalUnits');
+    const availableEl = document.getElementById('availableCount');
+    const comingEl = document.getElementById('comingCount');
+    
+    if (totalEl) totalEl.textContent = total;
+    if (availableEl) availableEl.textContent = available;
+    if (comingEl) comingEl.textContent = total - available;
+}
+
 
 /* ===== SEARCH FUNCTION ===== */
 function filterUnits() {
@@ -26,7 +142,6 @@ function filterUnits() {
         }
     });
     
-    // Show "no results" message
     const noResults = document.getElementById('noResults');
     if (noResults) {
         noResults.style.display = visibleCount === 0 ? 'block' : 'none';
@@ -35,13 +150,11 @@ function filterUnits() {
 
 /* ===== FILTER TABS ===== */
 function setFilter(filter, btn) {
-    // Update active tab
     document.querySelectorAll('.filter-tab').forEach(tab => {
         tab.classList.remove('active');
     });
     btn.classList.add('active');
     
-    // Filter cards
     const cards = document.querySelectorAll('.unit-card');
     cards.forEach(card => {
         const status = card.getAttribute('data-status');
@@ -56,12 +169,40 @@ function setFilter(filter, btn) {
     });
 }
 
+/* ===== COPY LINK FUNCTION ===== */
+function copyLink(page, btn) {
+    const baseUrl = window.location.href.replace(/\/[^/]*$/, '/');
+    const fullUrl = baseUrl + page;
+    
+    navigator.clipboard.writeText(fullUrl).then(() => {
+        const toast = document.getElementById('copyToast');
+        if (toast) {
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
+        }
+        
+        const originalText = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = originalText; }, 2000);
+    }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = fullUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+    });
+}
+
 /* ===== EXERCISE SYSTEM ===== */
 let exerciseScore = 0;
 let exerciseTotal = 0;
 let exerciseAnswered = 0;
 
-// Initialize exercise tracking
 function initExercises() {
     const exercises = document.querySelectorAll('.exercise');
     exerciseTotal = exercises.length;
@@ -70,13 +211,11 @@ function initExercises() {
     updateProgress();
 }
 
-// Check answer
 function checkAnswer(button, exerciseId, selectedIndex, correctIndex) {
     const exercise = document.getElementById(exerciseId);
     const feedback = exercise.querySelector('.feedback');
     const buttons = exercise.querySelectorAll('.option-btn');
     
-    // Disable all buttons in this exercise
     buttons.forEach(btn => {
         btn.style.pointerEvents = 'none';
         btn.style.opacity = '0.6';
@@ -85,7 +224,6 @@ function checkAnswer(button, exerciseId, selectedIndex, correctIndex) {
     exerciseAnswered++;
     
     if (selectedIndex === correctIndex) {
-        // CORRECT
         exerciseScore++;
         button.style.background = '#d4edda';
         button.style.borderColor = '#28a745';
@@ -94,13 +232,11 @@ function checkAnswer(button, exerciseId, selectedIndex, correctIndex) {
         feedback.textContent = '✅ Correct! Well done!';
         feedback.className = 'feedback correct';
     } else {
-        // WRONG
         button.style.background = '#f8d7da';
         button.style.borderColor = '#dc3545';
         button.style.color = '#721c24';
         button.style.opacity = '1';
         
-        // Highlight correct answer
         buttons[correctIndex].style.background = '#d4edda';
         buttons[correctIndex].style.borderColor = '#28a745';
         buttons[correctIndex].style.opacity = '1';
@@ -112,13 +248,11 @@ function checkAnswer(button, exerciseId, selectedIndex, correctIndex) {
     
     updateProgress();
     
-    // Show score when all exercises are done
     if (exerciseAnswered === exerciseTotal) {
         setTimeout(showScore, 800);
     }
 }
 
-// Update progress bar
 function updateProgress() {
     const bar = document.getElementById('progressBar');
     const text = document.getElementById('progressText');
@@ -130,7 +264,6 @@ function updateProgress() {
     }
 }
 
-// Show final score
 function showScore() {
     const scoreDisplay = document.getElementById('scoreDisplay');
     if (!scoreDisplay) return;
@@ -141,7 +274,6 @@ function showScore() {
     
     scoreNumber.textContent = exerciseScore + '/' + exerciseTotal;
     
-    // Dynamic emoji and message based on score
     const percentage = (exerciseScore / exerciseTotal) * 100;
     
     if (percentage === 100) {
@@ -162,7 +294,6 @@ function showScore() {
     scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-// Retry exercises
 function retryExercises() {
     const exercises = document.querySelectorAll('.exercise');
     
