@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8th Grade — Linor's English Hub</title>
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        /* 8th Grade — Teal Theme */
+        :root {
+            --grade-1: #4ECDC4;
+            --grade-2: #2C9E8F;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <p class="teacher-name">✨ Linor Peretz</p>
+            <h1>📗 8th Grade<span class="sub">English Hub</span></h1>
+            <p class="header-subtitle">Your complete English learning space</p>
+            <div class="quick-stats">
+                <span class="stat-item">📚 <strong>10</strong> Units</span>
+                <span class="stat-item">✅ <strong>0</strong> Available Now</span>
+                <span class="stat-item">🔜 <strong>10</strong> Coming Soon</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <a href="index.html" class="nav-btn">← Back to All Grades</a>
+
+        <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="🔍 Search units..." oninput="filterUnits()">
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setFilter('all', this)">All Units</button>
+            <button class="filter-tab" onclick="setFilter('available', this)">✅ Available</button>
+            <button class="filter-tab" onclick="setFilter('coming', this)">🔜 Coming Soon</button>
+        </div>
+
+        <p id="noResults" style="display:none; text-align:center; color:var(--text-light); padding:40px;">
+            🔍 No units found.
+        </p>
+
+        <div class="units-grid">
+
+            <div class="unit-card locked animate-in" data-unit="1" data-status="coming" data-title="my identity">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 1</span>
+                    <h3>🔒 My Identity</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="2" data-status="coming" data-title="social media">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 2</span>
+                    <h3>🔒 Social Media</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="3" data-status="coming" data-title="jobs and careers">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 3</span>
+                    <h3>🔒 Jobs and Careers</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="4" data-status="coming" data-title="the environment">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 4</span>
+                    <h3>🔒 The Environment</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="5" data-status="coming" data-title="movies and entertainment">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 5</span>
+                    <h3>🔒 Movies and Entertainment</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="6" data-status="coming" data-title="science and discovery">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 6</span>
+                    <h3>🔒 Science and Discovery</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="7" data-status="coming" data-title="friendship">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 7</span>
+                    <h3>🔒 Friendship</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="8" data-status="coming" data-title="travel stories">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 8</span>
+                    <h3>🔒 Travel Stories</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="9" data-status="coming" data-title="healthy living">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 9</span>
+                    <h3>🔒 Healthy Living</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <div class="unit-card locked animate-in" data-unit="10" data-status="coming" data-title="year review">
+                <div class="unit-card-inner">
+                    <span class="unit-number">Unit 10</span>
+                    <h3>🔒 Year Review</h3>
+                    <p class="unit-desc">Coming Soon</p>
+                    <span class="unit-btn-label coming">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Made with 💕 for 8th grade students · <a href="index.html">Linor Peretz</a></p>
+    </footer>
+
+    <script src="shared.js"></script>
+</body>
+</html>
