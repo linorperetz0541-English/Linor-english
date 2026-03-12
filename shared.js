@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit 1: Getting to Know You — 9th Grade</title>
-    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="../shared.css">
     <script src="../shared.js" defer></script>
     <style>
         :root {
